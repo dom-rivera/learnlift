@@ -17,6 +17,50 @@ LearnLift is an AI-powered study app. Upload your learning material as a PDF or 
 - **Vintage naturalist theme** — a light, aged-paper palette drawn from an antique butterfly plate
 - **Mobile-optimized** — iOS Safari quirks handled (dynamic viewport, safe areas, WebKit flip prefixes), Android file-picker MIME types, 44px+ touch targets, 20 MB file guard
 
+## 🚀 How to use LearnLift (for users)
+
+**What you need:** any web browser (phone, tablet, or computer) and a free [Claude](https://claude.ai) account for the AI generation step. No installation.
+
+### Step 1 — Open the app
+Click the link below (or scan it from wherever it was shared with you):
+
+**👉 https://claude.ai/public/artifacts/03814fc3-4412-4959-921d-e967cac4fa3b**
+
+The app opens instantly in your browser — you can look around without signing in.
+
+### Step 2 — Upload your learning material
+Tap the upload box and choose a file, or drag one in on desktop.
+
+- Supported formats: **PDF (.pdf)** and **Word (.docx)**
+- Maximum size: **20 MB** (split very large readings into parts)
+- Older `.doc` files must be re-saved as `.docx` first
+
+### Step 3 — Choose your study mode
+- **Quiz** — multiple-choice questions with instant right/wrong feedback
+- **Flashcards** — flip cards you self-mark as "knew it" or "missed it"
+
+Then pick how many items you want: **5, 10, 15, 20, or 30**. (Larger sets take a few minutes to generate — a progress bar keeps you posted.)
+
+### Step 4 — Hit "Generate" and sign in
+Press the **Generate** button. The first time, Claude will ask you to **sign in or create a free account** — this takes under a minute and is only needed because the AI generation runs on your own Claude account. After that, you're in.
+
+> 💡 Generation counts against your Claude plan's usage limits. On a free account, a few large 30-question sets in one sitting may hit your daily cap — 5–10 question sets are perfect for regular review; save 30 for exam prep.
+
+### Step 5 — Study!
+- **In Quiz mode:** tap an answer. You'll immediately see whether you were right, *why* the correct answer is correct, *why* your wrong choice was wrong, and a 📖 quote showing exactly where in **your document** the answer comes from.
+- **In Flashcard mode:** tap the card to flip it, read the answer and explanation, then mark whether you knew it.
+
+### Step 6 — See your score
+At the end you get your score, a percentage, and a question-by-question review of what you picked versus the correct answers. From there you can **retake the same set** or **upload a new document**.
+
+### Troubleshooting
+| Problem | Fix |
+|---|---|
+| "Generate" asks me to sign in | Normal — create a free Claude account and continue |
+| Generation fails or stalls | Check your connection and try again; very long documents work better with smaller question counts first |
+| My file is rejected | Ensure it's `.pdf` or `.docx` and under 20 MB |
+| Fewer questions than I asked for | Your document didn't have enough distinct material — the app refuses to pad with repeats or made-up questions |
+
 ## How it works
 
 ```
