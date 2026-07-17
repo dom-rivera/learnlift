@@ -76,6 +76,12 @@ button{touch-action:manipulation}
 
 /* progress */
 .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#9c8d6c}
+.meta-left{display:flex;align-items:center;gap:12px}
+.backbtn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  background:transparent;border:1.5px solid #ddd1ad;color:#9c8d6c;border-radius:8px;padding:8px 12px;cursor:pointer;
+  transition:border-color .12s, color .12s, background .12s;min-height:34px}
+@media (hover:hover){ .backbtn:hover{border-color:var(--teal);color:var(--teal)} }
+.backbtn.armed{border-color:var(--bad);color:var(--bad);background:var(--bad-bg)}
 .bar{height:6px;background:#e9dfc4;border-radius:99px;overflow:hidden;margin-bottom:26px}
 .bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
 
@@ -147,6 +153,8 @@ button{touch-action:manipulation}
 /* small screens (phones) */
 @media (max-width:540px){
   .qd-title{font-size:clamp(30px,8.5vw,40px)}
+  .backbtn{min-height:42px;padding:8px 14px}
+  .meta{flex-wrap:wrap;gap:8px}
   .card-pad{padding:20px 16px 20px 44px}
   .card.ruled{background-image:
     linear-gradient(to right, transparent 32px, var(--margin-red) 32px, var(--margin-red) 34px, transparent 34px),
@@ -276,6 +284,7 @@ async function generateBatch(source, mode, batchCount, avoid) {
       await new Promise(r => setTimeout(r, 2500));
       continue;
     }
+    if (!retryable) break; // 4xx errors won't succeed on retry — fail fast
   }
   if (!response.ok) {
     let detail = "";
@@ -373,7 +382,25 @@ export default function LearnLift() {
   const [dragOn, setDragOn] = useState(false);
   const [genProgress, setGenProgress] = useState({ done: 0, total: 0 });
   const [shortfall, setShortfall] = useState(false);
+  const [backArmed, setBackArmed] = useState(false);   // two-tap confirm for the back button
+  const backTimer = useRef(null);
   const inputRef = useRef(null);
+
+  // Back to the landing page mid-session. First tap arms the button (so an
+  // accidental tap can't wipe progress); second tap within 3s confirms.
+  const handleBack = () => {
+    if (!backArmed) {
+      setBackArmed(true);
+      clearTimeout(backTimer.current);
+      backTimer.current = setTimeout(() => setBackArmed(false), 3000);
+      return;
+    }
+    clearTimeout(backTimer.current);
+    setBackArmed(false);
+    setItems([]); setIdx(0); setPicked(null); setFlipped(false);
+    setRecord([]); setShortfall(false);
+    setStage("setup"); // file stays selected so settings can be tweaked and regenerated
+  };
 
   const reset = () => {
     setStage("setup"); setItems([]); setIdx(0); setPicked(null);
@@ -520,7 +547,12 @@ export default function LearnLift() {
           return (
             <>
               <div className="meta">
-                <span>QUESTION {idx + 1} / {items.length}</span>
+                <span className="meta-left">
+                  <button className={`backbtn ${backArmed ? "armed" : ""}`} onClick={handleBack}>
+                    {backArmed ? "Tap again to exit" : "← Back"}
+                  </button>
+                  QUESTION {idx + 1} / {items.length}
+                </span>
                 <span>SCORE {score}</span>
               </div>
               <div className="bar"><i style={{ width: `${(idx / items.length) * 100}%` }} /></div>
@@ -580,7 +612,12 @@ export default function LearnLift() {
           return (
             <>
               <div className="meta">
-                <span>CARD {idx + 1} / {items.length}</span>
+                <span className="meta-left">
+                  <button className={`backbtn ${backArmed ? "armed" : ""}`} onClick={handleBack}>
+                    {backArmed ? "Tap again to exit" : "← Back"}
+                  </button>
+                  CARD {idx + 1} / {items.length}
+                </span>
                 <span>KNOWN {score}</span>
               </div>
               <div className="bar"><i style={{ width: `${(idx / items.length) * 100}%` }} /></div>
