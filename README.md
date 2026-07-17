@@ -4,7 +4,7 @@
 
 LearnLift is an AI-powered study app. Upload your learning material as a PDF or Word document and it generates an interactive multiple-choice quiz or a flip-style flashcard deck — grounded strictly in your document, with explanations for every right and wrong answer, a source citation for each question, and your score at the end.
 
-> **Live app:** https://claude.ai/public/artifacts/03814fc3-4412-4959-921d-e967cac4fa3b
+> **Live app:** https://claude.ai/public/artifacts/70e0091f-a32a-4797-af6d-25a0e6967c8f
 
 ## Features
 
@@ -24,7 +24,7 @@ LearnLift is an AI-powered study app. Upload your learning material as a PDF or 
 ### Step 1 — Open the app
 Click the link below (or scan it from wherever it was shared with you):
 
-**👉 https://claude.ai/public/artifacts/03814fc3-4412-4959-921d-e967cac4fa3b**
+**👉 https://claude.ai/public/artifacts/70e0091f-a32a-4797-af6d-25a0e6967c8f**
 
 The app opens instantly in your browser — you can look around without signing in.
 
