@@ -28,7 +28,7 @@ button{touch-action:manipulation}
   padding:calc(24px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
   calc(80px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left))}
 .brand{font-weight:900;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin-bottom:26px;display:flex;align-items:center;gap:8px}
-.brand .bfly{font-size:19px}
+.brand .bfly{display:block;flex:none}
 .brand small{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a4967a;margin-left:4px;margin-top:3px}
 .qd-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--verm)}
 .qd-title{font-weight:900;font-size:clamp(34px,6vw,54px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 8px;color:var(--ink)}
@@ -425,7 +425,21 @@ export default function LearnLift() {
       <style>{styles}</style>
       <div className="qd-shell">
         <div className="brand">
-          <span className="bfly" aria-hidden="true">🦋</span>
+          <svg className="bfly" aria-hidden="true" width="26" height="22" viewBox="-42 -36 84 63" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-2,-16 C-3,-24 -7,-29 -12,-32" stroke="#4a2c52" strokeWidth="2.6" fill="none" strokeLinecap="round"/>
+            <path d="M2,-16 C3,-24 7,-29 12,-32" stroke="#4a2c52" strokeWidth="2.6" fill="none" strokeLinecap="round"/>
+            <circle cx="-12" cy="-32" r="2.4" fill="#4a2c52"/><circle cx="12" cy="-32" r="2.4" fill="#4a2c52"/>
+            <path d="M-3,-3 C-5,-16 -12,-28 -22,-30 C-32,-32 -38,-24 -36,-15 C-34,-5 -24,2 -12,3 C-6,3.5 -3,1 -3,-3 Z" fill="#e8552e" stroke="#4a2c52" strokeWidth="4.5" strokeLinejoin="round"/>
+            <path d="M3,-3 C5,-16 12,-28 22,-30 C32,-32 38,-24 36,-15 C34,-5 24,2 12,3 C6,3.5 3,1 3,-3 Z" fill="#e8552e" stroke="#4a2c52" strokeWidth="4.5" strokeLinejoin="round"/>
+            <path d="M-8,-6 C-10,-15 -15,-23 -22,-25 C-28,-26 -31,-21 -29,-15 C-27,-9 -20,-4 -13,-3 C-9,-2.6 -8,-4 -8,-6 Z" fill="#f5833f"/>
+            <path d="M8,-6 C10,-15 15,-23 22,-25 C28,-26 31,-21 29,-15 C27,-9 20,-4 13,-3 C9,-2.6 8,-4 8,-6 Z" fill="#f5833f"/>
+            <path d="M-3,5 C-6,15 -13,23 -21,23 C-28,23 -31,16 -28,10 C-25,4 -14,2 -6,5 C-4,5.8 -3,5 -3,5 Z" fill="#5b3766" stroke="#4a2c52" strokeWidth="4" strokeLinejoin="round"/>
+            <path d="M3,5 C6,15 13,23 21,23 C28,23 31,16 28,10 C25,4 14,2 6,5 C4,5.8 3,5 3,5 Z" fill="#5b3766" stroke="#4a2c52" strokeWidth="4" strokeLinejoin="round"/>
+            <circle cx="-18" cy="13" r="5.6" fill="#f3e8d8"/><circle cx="-18" cy="13" r="2.6" fill="#4a2c52"/>
+            <circle cx="18" cy="13" r="5.6" fill="#f3e8d8"/><circle cx="18" cy="13" r="2.6" fill="#4a2c52"/>
+            <circle cx="-27" cy="-20" r="2.8" fill="#f3e8d8" opacity="0.9"/><circle cx="27" cy="-20" r="2.8" fill="#f3e8d8" opacity="0.9"/>
+            <ellipse cx="0" cy="-1" rx="4" ry="15" fill="#4a2c52"/><circle cx="0" cy="-15" r="4.2" fill="#4a2c52"/>
+          </svg>
           LearnLift
           <small>Study smarter</small>
         </div>
