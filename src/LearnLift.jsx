@@ -251,17 +251,46 @@ async function generateBatch(source, mode, batchCount, avoid) {
       ]
     : [{ type: "text", text: `LEARNING MATERIAL:\n"""\n${source.text}\n"""\n\n${promptText}` }];
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1000,
-      temperature: 0.3, // low temperature keeps output close to the source material
-      messages: [{ role: "user", content: userContent }],
-    }),
-  });
-  if (!response.ok) throw new Error("The quiz generator is unavailable right now. Please try again.");
+  // Call the API with one automatic retry on transient failures (rate limit / overload).
+  // NOTE: only the documented params (model, max_tokens, messages) are sent — the
+  // artifact platform's auth bridge can reject requests carrying extra parameters.
+  let response;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: userContent }],
+        }),
+      });
+    } catch (networkErr) {
+      if (attempt === 0) { await new Promise(r => setTimeout(r, 2500)); continue; }
+      throw new Error("Network error — check your internet connection and try again.");
+    }
+    if (response.ok) break;
+    const retryable = response.status === 429 || response.status >= 500;
+    if (retryable && attempt === 0) {
+      await new Promise(r => setTimeout(r, 2500));
+      continue;
+    }
+  }
+  if (!response.ok) {
+    let detail = "";
+    try {
+      const errBody = await response.json();
+      detail = errBody?.error?.message || "";
+    } catch { /* non-JSON error body */ }
+    if (response.status === 429) {
+      throw new Error("You've hit your Claude usage limit for now. Wait a little while, then try again — or generate a smaller set.");
+    }
+    if (response.status === 413) {
+      throw new Error("This document is too large to process. Try a smaller file or split it into parts.");
+    }
+    throw new Error(`Generation failed (HTTP ${response.status}${detail ? `: ${detail}` : ""}). Please try again.`);
+  }
   const data = await response.json();
   const raw = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
   const clean = raw.replace(/```json|```/g, "").trim();
